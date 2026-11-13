@@ -19,7 +19,7 @@ fetch('http://127.0.0.1:8000/api/v1/exchange-requests').then(response => {
 ).then(data => {
   const getData = data.data
   afficherData(getData)
- 
+
 })
 
 afficherData = (data) => {
@@ -37,7 +37,7 @@ afficherData = (data) => {
                         <h2 class="font-bold">${element.book.title}</h2>
                         <p class="text-sm">${element.book.category.name}</p>
                         <p>${element.book.description}</p>
-                        <div id = "id${element.id}" class="flex gap-3 mt-2">
+                        <div class="flex gap-3 mt-2">${afficherTags(element.book.tags)}
                         </div>
                     </div>
                 </div>
@@ -46,37 +46,31 @@ afficherData = (data) => {
                     <path strokeLinecap="round" strokeLinejoin="round"
                         d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
                 </svg>
-                <div  class="flex gap-3 w-1/2 justify-center livres-extchenge-card${element.id}">
+                <div  class="flex gap-3 w-1/2 justify-center flex-col ">${afficherOffre(element.offers, element.offers_count)}
                 </div>
             </div>
             <button class="border w-max p-2 rounded-xl cursor-pointer">voir les details</button>
             </div>
   
   ` ;
-    afficherTags(element)
-    afficherOffre(element)
+    
   });
 }
 
-afficherTags = (element) => {
-
-  element.book.tags.forEach((tag) => {
-    const parent = document.querySelector(`#id${element.id}`);
-    const p = document.createElement("p");
-    p.textContent = `${tag}`
-    p.classList = `border px-2 rounded-xl w-max text-sm bg-[#F5FFFA]`
-    parent.appendChild(p)
+afficherTags = (tags) => {
+let container="";
+  tags.forEach((tag) => {
+    container+=`<p class="border px-2 rounded-xl w-max text-sm bg-[#F5FFFA]">${tag}</p>`
   })
+  return container;
 }
 
-afficherOffre = (element) => {
-  let livres_extchenge_card = document.querySelector(`.livres-extchenge-card${element.id}`)
-  const div = document.createElement('div')
-  div.classList=`flex gap-3 flex-col`
-  if(element.offers_count!=0){
-  element.offers.forEach(ele=>{
-    
-    div.innerHTML += `
+afficherOffre = (offers, nbrOffers) => {
+  let container = "";
+  if ( nbrOffers!= 0) {
+    offers.forEach(ele => {
+
+      container+= `<div class="flex gap-3 flex-col">
     <div  class="flex gap-3">
      <img src="http://127.0.0.1:8000${ele.offered_book.image_url}" alt="" class="w-20 h-30">
                     <div>
@@ -86,13 +80,13 @@ afficherOffre = (element) => {
                         <p>${ele.offered_book.description}</p>
                     </div>
                     </div>
+                    </div>
                     `
-    livres_extchenge_card.appendChild(div)
-  })
+                  })
+                 
   }
-  if(element.offers_count==0){
-    div.classList.add=``
-    div.innerHTML += `
+  if (nbrOffers == 0) {
+    container= `<div class="flex flex-col gap-3 w-1/2 items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                             stroke="currentColor" class="w-20">
                             <path strokeLinecap="round" strokeLinejoin="round"
@@ -100,9 +94,9 @@ afficherOffre = (element) => {
                         </svg>
                         <p class="">no book offered for swap</p>
                         <div><button class="border w-max p-2 rounded-xl cursor-pointer">proposer un offre</button></div>
+                        </div>
                     `
-                    div.classList=`flex flex-col gap-3 w-1/2 items-center`
-    livres_extchenge_card.appendChild(div)
 
   }
+  return container
 }
