@@ -159,11 +159,9 @@ NbrDemandeDisponible=(data)=>{
   let nbr=0;
   data.forEach(ele=>{
     nbr++;
-    NbrDemandeDisponible.textContent=`${nbr} demandes disponibles`
-    NbrDemandeDisponible.classList=`text-4xl font-bold `
+    NbrDemandeDisponible.textContent=`${nbr}`
+    NbrDemandeDisponible.classList=`text-[#C6F24E] `
   }
-
-
   )
 
 
