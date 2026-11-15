@@ -24,7 +24,7 @@ fetch('http://127.0.0.1:8000/api/v1/exchange-requests').then(response => {
 main=(data)=>{
 afficherData(data);
 searchBookName(data);
-// filterBooks(data)
+filterBooks(data)
 }
 
 afficherData = (data) => {
@@ -36,6 +36,7 @@ afficherData = (data) => {
     <p class="border px-2 rounded-xl w-max text-sm">${element.exchange_type}</p>
   <div class="flex ">
                 <div  class="flex gap-3 w-1/2">
+
                     <img src="http://127.0.0.1:8000${element.book.image_url}" alt="" class="w-20 h-30">
                     <div class="livre-info>
                         <h4 class="text-sm font-bold">${element.book.author}</h4>
@@ -135,7 +136,22 @@ if(boukFound.length==0){
 }
 
 filterBooks=(data)=>{
-  
+  let fillterbtns=document.querySelectorAll(".fillterbtn")
+  let cards_livres = document.querySelector('.cards-livres')
+  fillterbtns.forEach(btn=>{
+    btn.addEventListener("click",(event)=>{
+cards_livres.innerHTML=""
+      let Bookfound=data.filter(ele=>ele.exchange_type==event.target.dataset.type)
+      if(Bookfound.length==0){
+        afficherData(data)
+      }
+      if(Bookfound.length!=0){
+        afficherData(Bookfound)
+      }
+
+    })
+  })
+
 }
 
 
