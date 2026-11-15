@@ -30,7 +30,8 @@ afficherData = (data) => {
   NbrDemandeDisponible(data)
   let cards_livres = document.querySelector('.cards-livres')
   let swap_livre = document.getElementsByClassName('swap-livre')
-  data.forEach(element => {
+  if(data.length!=0){
+    data.forEach(element => {
     // console.log(element.book.image_url)
     cards_livres.innerHTML += `<div class=" bg-[#E3E4EA] border p-6 flex flex-col gap-3 rounded-xl">
     <p class="border px-2 rounded-xl w-max text-sm">${element.exchange_type}</p>
@@ -60,7 +61,22 @@ afficherData = (data) => {
   
   ` ;
     
-  });
+  })
+  }
+  if(data.length==0){
+  cards_livres.innerHTML= `<div class="flex flex-col gap-3  items-center justify-center h-[20rem] border">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                            stroke="currentColor" class="w-20">
+                            <path strokeLinecap="round" strokeLinejoin="round"
+                                d="M15.182 16.318A4.486 4.486 0 0 0 12.016 15a4.486 4.486 0 0 0-3.198 1.318M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+                        </svg>
+                        <p class="">no result found </p>
+                        
+                        </div>
+                    `
+
+}
+  ;
 }
 
 afficherTags = (tags) => {
@@ -92,6 +108,7 @@ afficherOffre = (offers, nbrOffers) => {
                  
   }
   if (nbrOffers == 0) {
+    
     container= `<div class="flex flex-col gap-3 w-1/2 items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                             stroke="currentColor" class="w-20">
@@ -113,23 +130,7 @@ searchBookName=(data)=>{
   searchBar.addEventListener("input",()=>{
 cards_livres.innerHTML=""
 let boukFound=data.filter(ele=>ele.book.title.toUpperCase().includes(searchBar.value.toUpperCase()))
-if(boukFound.length!=0){
 afficherData(boukFound)
-}
-if(boukFound.length==0){
-  cards_livres.innerHTML= `<div class="flex flex-col gap-3  items-center justify-center h-[20rem] border">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                            stroke="currentColor" class="w-20">
-                            <path strokeLinecap="round" strokeLinejoin="round"
-                                d="M15.182 16.318A4.486 4.486 0 0 0 12.016 15a4.486 4.486 0 0 0-3.198 1.318M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
-                        </svg>
-                        <p class="">no result found </p>
-                        
-                        </div>
-                    `
-
-}
-
   })
   
   
@@ -157,12 +158,13 @@ cards_livres.innerHTML=""
 NbrDemandeDisponible=(data)=>{
   let NbrDemandeDisponible= document.getElementById("NbrDemandeDisponible")
   let nbr=0;
-  data.forEach(ele=>{
+  if(data.length!=0){
+    data.forEach(ele=>{
     nbr++;
-    NbrDemandeDisponible.textContent=`${nbr}`
-    NbrDemandeDisponible.classList=`text-[#C6F24E] `
+    
+  } )
+  
   }
-  )
-
-
+  NbrDemandeDisponible.textContent=`${nbr}`
+  NbrDemandeDisponible.classList=`text-[#C6F24E] `
 }
